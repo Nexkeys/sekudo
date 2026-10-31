@@ -1,4 +1,4 @@
-"""Exposure checks — leaked secrets, source control, API docs, backups.
+"""Exposure checks, leaked secrets, source control, API docs, backups.
 
 Spans A01 (access control), A02 (crypto/secret exposure) and A05 (misconfig).
 """

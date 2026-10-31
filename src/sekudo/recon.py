@@ -1,4 +1,4 @@
-"""Surface mapping — find the attack surface before hunting it.
+"""Surface mapping, find the attack surface before hunting it.
 
 Crawls same-host pages (bounded), extracts links, form actions and their input
 names, and reads robots.txt / sitemap.xml for more paths. Populates

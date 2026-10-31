@@ -1,4 +1,4 @@
-"""A03:2021 Injection — SQLi, NoSQLi, XSS, SSTI, command injection, traversal, CRLF.
+"""A03:2021 Injection, SQLi, NoSQLi, XSS, SSTI, command injection, traversal, CRLF.
 
 All PoCs are benign: they prove the injection point with markers, comparisons or
 bounded timing. None dump, drop, or mutate data.
@@ -66,7 +66,7 @@ async def sqli_boolean(ctx: ScanContext) -> list[Finding]:
                 check_id="inj.sqli.boolean", title=f"Boolean-based blind SQLi in `{param}`",
                 owasp="A03:2021 Injection", severity=Severity.CRITICAL, target=ep.url,
                 description=(f"A TRUE vs FALSE SQL condition in `{param}` produced materially "
-                             f"different responses — the query honours injected logic."),
+                             f"different responses, the query honours injected logic."),
                 evidence=f"TRUE len={len(t.text)} vs FALSE len={len(f.text)} (delta>60 bytes)",
                 remediation="Parameterize queries; validate/whitelist input types.",
                 confirmed=True,
@@ -107,7 +107,7 @@ async def nosqli(ctx: ScanContext) -> list[Finding]:
                     check_id="inj.nosqli", title=f"Possible NoSQL injection in `{param}`",
                     owasp="A03:2021 Injection", severity=Severity.HIGH, target=ep.url,
                     description=(f"A Mongo-style operator payload in `{param}` returned more "
-                                 f"data than a non-matching value — operator injection likely."),
+                                 f"data than a non-matching value, operator injection likely."),
                     evidence=f"payload: {param}={payload}\nresponse grew {len(base.text)}→{len(r.text)} bytes",
                     remediation="Cast/validate input types; reject objects where scalars are expected.",
                     confirmed=False,
@@ -167,7 +167,7 @@ async def cmdi(ctx: ScanContext) -> list[Finding]:
                 out.append(Finding(
                     check_id="inj.cmdi", title=f"OS command injection in `{param}`",
                     owasp="A03:2021 Injection", severity=Severity.CRITICAL, target=ep.url,
-                    description=(f"A shell echo injected via `{param}` executed — the app passes "
+                    description=(f"A shell echo injected via `{param}` executed, the app passes "
                                  f"input to a system shell."),
                     evidence=f"payload: {probe} → marker {P.CMDI_MARKER} echoed back",
                     remediation="Avoid shells; use argument arrays/APIs; strictly validate input.",
@@ -187,7 +187,7 @@ async def traversal(ctx: ScanContext) -> list[Finding]:
                 out.append(Finding(
                     check_id="inj.traversal", title=f"Path traversal via `{param}`",
                     owasp="A01:2021 Broken Access Control", severity=Severity.HIGH, target=ep.url,
-                    description=(f"`{param}` read a file outside the web root — the parameter is "
+                    description=(f"`{param}` read a file outside the web root, the parameter is "
                                  f"used in a filesystem path without canonicalization."),
                     evidence=f"payload: {payload} → matched well-known read-only system file",
                     remediation="Resolve+confine paths to an allowlisted base dir; reject '..'.",

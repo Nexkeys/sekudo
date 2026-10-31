@@ -105,7 +105,7 @@ async def run_selected(
         try:
             findings.extend(await c.fn(ctx))
         except BudgetExceeded:
-            break  # safety stop — return what we have
-        except Exception as exc:  # noqa: BLE001 — a dead check must not kill the scan
+            break  # safety stop, return what we have
+        except Exception as exc:  # noqa: BLE001, a dead check must not kill the scan
             ctx.notes.setdefault("check_errors", {})[c.id] = f"{type(exc).__name__}: {exc}"
     return findings

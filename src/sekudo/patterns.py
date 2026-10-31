@@ -32,9 +32,9 @@ SQLI_BOOLEAN_FALSE = "' AND '1'='2"
 SQLI_ERROR_PROBE = "'"
 # Time-based: a short, bounded sleep to prove execution without hammering.
 SQLI_TIME_PROBES = [
-    "' AND SLEEP(3)-- -",            # MySQL
-    "';SELECT pg_sleep(3)-- -",      # Postgres
-    "' WAITFOR DELAY '0:0:3'-- -",   # MSSQL
+    "' AND SLEEP(3)-- -",           # MySQL
+    "';SELECT pg_sleep(3)-- -",     # Postgres
+    "' WAITFOR DELAY '0:0:3'-- -",  # MSSQL
 ]
 SQLI_TIME_THRESHOLD_MS = 2800
 

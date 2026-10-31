@@ -69,12 +69,12 @@ async def login_rate_limit(ctx: ScanContext) -> list[Finding]:
         return []
     user_f, pwd_f = _creds_fields(ep)
     statuses = []
-    for i in range(6):  # bounded — enough to see a lockout, not to stuff
+    for i in range(6):  # bounded, enough to see a lockout, not to stuff
         r = await ctx.engine.request(ep.method, ep.url,
                                      data={user_f: "sekudo_user", pwd_f: f"wrong{i}"})
         statuses.append(r.status)
         if r.status == 429:
-            return []  # lockout kicked in — good
+            return []  # lockout kicked in, good
     if all(s not in (429, 0) for s in statuses):
         return [Finding(
             check_id="auth.login_rate_limit", title="Login endpoint lacks rate-limiting",
@@ -97,7 +97,7 @@ async def jwt_alg_none(ctx: ScanContext) -> list[Finding]:
     if not tokens:
         return []
     return [Finding(
-        check_id="auth.jwt_alg_none", title="JWT present — test alg=none / weak secret",
+        check_id="auth.jwt_alg_none", title="JWT present, test alg=none / weak secret",
         owasp="A07:2021 Auth Failures", severity=Severity.MEDIUM, target=ctx.base_url,
         description=("A JWT is in use. Forge a token with header alg=none (and try a weak HMAC secret). "
                      "If the server accepts either, authentication is fully bypassable."),

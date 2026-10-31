@@ -1,4 +1,4 @@
-"""Scope gate — the fence.
+"""Scope gate, the fence.
 
 Every tool that touches a network target routes through `authorize()`. A target
 is only in scope when ALL of the following hold:

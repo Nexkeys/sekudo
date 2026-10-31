@@ -18,7 +18,7 @@ USER_AGENT = "sekudo/0.1 (+https://github.com/Nexkeys/sekudo; authorized-testing
 
 
 class BudgetExceeded(Exception):
-    """Raised when a scan hits its request budget — a safety stop, not an error."""
+    """Raised when a scan hits its request budget, a safety stop, not an error."""
 
 
 @dataclass
@@ -59,7 +59,7 @@ class HttpEngine:
         self._client = httpx.AsyncClient(
             follow_redirects=False,
             timeout=timeout,
-            verify=False,  # testing targets often use self-signed certs in lab
+            verify=False, # testing targets often use self-signed certs in lab
             headers={"User-Agent": USER_AGENT},
             limits=httpx.Limits(max_connections=20, max_keepalive_connections=10),
         )
@@ -81,7 +81,7 @@ class HttpEngine:
     ) -> Response:
         if self._count >= self.max_requests:
             raise BudgetExceeded(
-                f"Request budget of {self.max_requests} reached — stopping this scan. "
+                f"Request budget of {self.max_requests} reached, stopping this scan. "
                 f"Raise max_requests_per_scan in config for a bigger run."
             )
         await self._bucket.take()
@@ -100,7 +100,7 @@ class HttpEngine:
                 text=body,
                 elapsed_ms=(time.monotonic() - start) * 1000,
             )
-        except Exception as exc:  # noqa: BLE001 — surface network errors as data
+        except Exception as exc:  # noqa: BLE001, surface network errors as data
             return Response(
                 url=url, status=0, headers={}, text="",
                 elapsed_ms=(time.monotonic() - start) * 1000, error=f"{type(exc).__name__}: {exc}",

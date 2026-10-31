@@ -26,7 +26,7 @@ mcp = FastMCP("sekudo")
 def about() -> str:
     """What Sekudo is, and the rules it operates under."""
     return (
-        f"Sekudo v{__version__} — a scope-gated DAST exploitation engine exposed over MCP.\n\n"
+        f"Sekudo v{__version__}, a scope-gated DAST exploitation engine exposed over MCP.\n\n"
         "It hunts hard (recon + 34 active OWASP-mapped checks) and PROVES findings with benign "
         "proof-of-concept. It only tests targets you declare you own or are authorized to assess, "
         "in sekudo.config.yaml. It will not: attack out-of-scope hosts, dump or destroy data, drop "
@@ -51,7 +51,7 @@ def list_checks() -> str:
 
 @mcp.tool()
 def check_scope(target: str) -> str:
-    """Report whether `target` is in the operator's authorized scope — makes no requests."""
+    """Report whether `target` is in the operator's authorized scope, makes no requests."""
     try:
         cfg = Config.load()
     except ScopeError as e:
@@ -105,7 +105,7 @@ async def scan(
 
     Args:
         target: URL or host to test. MUST be in sekudo.config.yaml authorized_targets.
-        confirm: Must be true to run — an explicit per-run acknowledgement.
+        confirm: Must be true to run, an explicit per-run acknowledgement.
         categories: Optional filter, e.g. ["injection","auth"]. Omit for all.
         check_ids: Optional exact check ids, e.g. ["inj.sqli.error"]. Omit for all.
         max_pages: Crawl budget for surface mapping (default 25).

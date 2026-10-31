@@ -1,4 +1,4 @@
-"""A06:2021 Vulnerable & Outdated Components — fingerprinting & version banners."""
+"""A06:2021 Vulnerable & Outdated Components, fingerprinting & version banners."""
 
 from __future__ import annotations
 

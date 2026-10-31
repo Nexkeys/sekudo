@@ -2,20 +2,20 @@
 
 **An aggressive, scope-gated DAST exploitation engine, delivered as an MCP server.**
 
-Sekudo hunts hard inside systems you own — recon, then 34 active checks mapped to
-the **OWASP Top 10 (2021)** — and *proves* what it finds with benign
+Sekudo hunts hard inside systems you own, recon, then 34 active checks mapped to
+the **OWASP Top 10 (2021)**, and *proves* what it finds with benign
 proof-of-concept instead of destroying the target. Drop it into any MCP-capable
 coding host (Claude Code, Codex, OpenCode, Cursor, and others), point it at your
 app or staging box, and get a prioritized, patch-ready report.
 
 > Think of it as a pack of hyenas on a long leash: they bite deep and bring back
-> exactly where and how they got in — but they only hunt inside **your** fence.
+> exactly where and how they got in, but they only hunt inside **your** fence.
 
 ---
 
 ## Why it exists
 
-Vibe-coded apps ship fast and leak often — exposed `.env` files, SQL injection in
+Vibe-coded apps ship fast and leak often, exposed `.env` files, SQL injection in
 a hand-rolled query, a login with no rate limit, a `.git` folder served to the
 world. Sekudo is the MCP you install so the model in your IDE can *actually test*
 your project the way an attacker would, and hand you the fixes.
@@ -32,7 +32,7 @@ That is enforced, not suggested:
 - PoCs are **non-destructive**: SQLi is proven by comparison/timing/error, not by
   dumping or dropping tables. Traversal reads well-known read-only files. XSS/SSTI
   use inert markers. Login testing is **bounded** (a tiny default-cred list, capped
-  attempts) — it detects a missing lockout, it is not a credential-stuffer.
+  attempts), it detects a missing lockout, it is not a credential-stuffer.
 - No persistence, no backdoors, no data exfiltration, no lateral movement into
   third-party systems.
 
@@ -66,7 +66,7 @@ MCP host (Claude Code / Codex / …)   ← the "brain": chains the tools
         └─ report       JSON + Markdown "bite-by-bite" findings (the kill report)
 ```
 
-No separate AI API key is needed — the model already running in your IDE drives
+No separate AI API key is needed, the model already running in your IDE drives
 the tools. Sekudo is plain Python doing the network work.
 
 ## Install
@@ -86,16 +86,40 @@ cp sekudo.config.example.yaml sekudo.config.yaml
 # edit: set i_am_authorized: true and list YOUR hosts
 ```
 
-## Add to your IDE (MCP)
+## Add to any MCP-capable IDE
 
-Claude Code:
+Sekudo talks MCP over local stdio, so it runs in any IDE or agent that supports
+MCP servers (Claude Code, Cursor, Windsurf, Codex, OpenCode, Zed, and more). It
+is not Claude-only.
 
-```bash
-claude mcp add sekudo -- sekudo
+The universal way: copy the `sekudo` block from
+[`mcp-config.example.json`](mcp-config.example.json) into your host's MCP config
+(usually an `mcpServers` object in a JSON file), set `SEKUDO_CONFIG` to the
+absolute path of your `sekudo.config.yaml`, then restart the IDE.
+
+```json
+{
+  "mcpServers": {
+    "sekudo": {
+      "command": "sekudo",
+      "args": [],
+      "env": { "SEKUDO_CONFIG": "/absolute/path/to/sekudo.config.yaml" }
+    }
+  }
+}
 ```
 
-…or paste the `sekudo` block from [`mcp-config.example.json`](mcp-config.example.json)
-into your host's MCP config, setting `SEKUDO_CONFIG` to your config path.
+Where that JSON lives, by host:
+
+* Claude Code: `.mcp.json` in the project (or run `claude mcp add sekudo -- sekudo`)
+* Cursor: `.cursor/mcp.json`
+* Windsurf: `~/.codeium/windsurf/mcp_config.json`
+* Codex, OpenCode, Zed, others: the `mcpServers` section of their MCP config
+
+Not installed? Run straight from a checkout with `"command": "python"`,
+`"args": ["-m", "sekudo"]` and `PYTHONPATH` pointed at `src` (see the
+`sekudo-from-source` block in
+[`mcp-config.example.json`](mcp-config.example.json)).
 
 ## Use it
 
@@ -137,5 +161,5 @@ Use parameterized queries / prepared statements; never concatenate input into SQ
 
 ## License
 
-MIT — see [LICENSE](LICENSE). You are responsible for using Sekudo only against
+MIT, see [LICENSE](LICENSE). You are responsible for using Sekudo only against
 systems you are authorized to test.

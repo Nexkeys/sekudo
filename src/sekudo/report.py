@@ -77,7 +77,7 @@ class ScanReport:
     def to_markdown(self) -> str:
         c = self.counts()
         lines = [
-            f"# Sekudo report — {self.target}",
+            f"# Sekudo report, {self.target}",
             "",
             f"- Started: {self.started_at}",
             f"- Finished: {self.finished_at}",
@@ -90,7 +90,7 @@ class ScanReport:
         ]
         if not self.findings:
             lines.append("No findings. Either the target is tight, or the budget "
-                         "ran out before deeper checks — raise it and re-run.")
+                         "ran out before deeper checks, raise it and re-run.")
             return "\n".join(lines)
         for f in self.sorted_findings():
             badge = "✅ CONFIRMED" if f.confirmed else "⚠️ INDICATED"

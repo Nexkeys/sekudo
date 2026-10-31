@@ -1,4 +1,4 @@
-"""Sekudo — scope-gated DAST exploitation MCP.
+"""Sekudo, scope-gated DAST exploitation MCP.
 
 Hunts hard inside targets the operator is authorized to test. Proves
 vulnerabilities with benign proof-of-concept rather than destroying or

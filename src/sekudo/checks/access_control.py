@@ -53,7 +53,7 @@ async def open_redirect(ctx: ScanContext) -> list[Finding]:
                 out.append(Finding(
                     check_id="ac.open_redirect", title=f"Open redirect via `{param}`",
                     owasp="A01:2021 Broken Access Control", severity=Severity.MEDIUM, target=ep.url,
-                    description=f"`{param}` redirects to an attacker-supplied absolute URL — useful for phishing/oauth theft.",
+                    description=f"`{param}` redirects to an attacker-supplied absolute URL, useful for phishing/oauth theft.",
                     evidence=f"{param}={P.OPEN_REDIRECT_TARGET} → {r.status} Location: {loc}",
                     remediation="Redirect only to relative paths or an allowlist of hosts.", confirmed=True,
                 ))
@@ -90,7 +90,7 @@ async def idor(ctx: ScanContext) -> list[Finding]:
             out.append(Finding(
                 check_id="ac.idor", title=f"Possible IDOR on `{param}`",
                 owasp="A01:2021 Broken Access Control", severity=Severity.HIGH, target=ep.url,
-                description=(f"Changing `{param}` returned different object content with no auth challenge — "
+                description=(f"Changing `{param}` returned different object content with no auth challenge, "
                              f"verify these objects belong to different owners."),
                 evidence=f"{param}=1 and {param}=2 both 200 with differing bodies",
                 remediation="Enforce per-object authorization server-side (ownership checks), not just auth.", confirmed=False,
