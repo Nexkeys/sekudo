@@ -1,0 +1,17 @@
+# sekudo
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Operator config may name real targets — never commit it
+sekudo.config.yaml
+sekudo.config.yml
+
+# Reports can contain sensitive findings
+reports/
+*.sekudo.json
+*.sekudo.md

@@ -1,0 +1,22 @@
+{
+  "//": "Paste the 'sekudo' block into your IDE's MCP config (Claude Code: .mcp.json or claude mcp add; Codex/other: the mcpServers section). Adjust the path or use the installed `sekudo` script.",
+  "mcpServers": {
+    "sekudo": {
+      "command": "sekudo",
+      "args": [],
+      "env": {
+        "SEKUDO_CONFIG": "/absolute/path/to/sekudo.config.yaml",
+        "SEKUDO_REPORT_DIR": "/absolute/path/to/reports"
+      }
+    },
+    "sekudo-from-source": {
+      "//": "Alternative: run from a checkout without installing.",
+      "command": "python",
+      "args": ["-m", "sekudo"],
+      "env": {
+        "PYTHONPATH": "/absolute/path/to/sekudo/src",
+        "SEKUDO_CONFIG": "/absolute/path/to/sekudo.config.yaml"
+      }
+    }
+  }
+}

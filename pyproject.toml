@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sekudo"
+version = "0.1.0"
+description = "Sekudo — an aggressive, scope-gated DAST exploitation MCP. Hunts hard inside targets you own; proves bugs instead of destroying them."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Nexkeys" }]
+keywords = ["security", "dast", "mcp", "pentest", "sqli", "appsec"]
+dependencies = [
+    "mcp>=1.2.0",
+    "httpx>=0.27.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+sekudo = "sekudo.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sekudo"]
