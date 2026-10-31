@@ -69,7 +69,15 @@ MCP host (Claude Code / Codex / …)   ← the "brain": chains the tools
 No separate AI API key is needed, the model already running in your IDE drives
 the tools. Sekudo is plain Python doing the network work.
 
-## Install
+## Two editions, same 34 checks
+
+- **Node / npx** (easiest, see [`node/`](node/)): zero clone, zero virtualenv.
+  Once published, add it to any MCP connector with `Command: npx`,
+  `Arguments: -y sekudo-mcp@0.1.0`, and set scope through env vars. Full details
+  in [node/README.md](node/README.md).
+- **Python** (this directory): best if you already work in Python. Install below.
+
+## Install (Python)
 
 ```bash
 git clone https://github.com/Nexkeys/sekudo.git
@@ -154,7 +162,7 @@ Use parameterized queries / prepared statements; never concatenate input into SQ
 
 ## Roadmap
 
-- TypeScript/Node port (same tools, `npx` install)
+- TypeScript/Node port (shipped, see [`node/`](node/)); publish to npm for `npx`
 - Out-of-band collector for confirming blind SSRF/XXE
 - Authenticated scans (session/cookie injection)
 - SARIF output for CI

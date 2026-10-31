@@ -1,0 +1,47 @@
+{
+  "name": "sekudo-mcp",
+  "version": "0.1.0",
+  "description": "Sekudo, a scope-gated DAST exploitation MCP server. Hunts hard inside authorized targets and proves findings with benign proof-of-concept.",
+  "type": "module",
+  "bin": {
+    "sekudo-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "selftest": "node dist/index.js --selftest",
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "security",
+    "dast",
+    "mcp",
+    "model-context-protocol",
+    "pentest",
+    "sqli",
+    "appsec",
+    "owasp"
+  ],
+  "license": "MIT",
+  "author": "Nexkeys",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexkeys/sekudo.git",
+    "directory": "node"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.4.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/node": "^20.14.0"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+
+# Operator config and reports may hold sensitive data
+sekudo.config.json
+reports/
+*.sekudo.json
+*.sekudo.md
