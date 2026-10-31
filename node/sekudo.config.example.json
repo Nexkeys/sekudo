@@ -1,0 +1,11 @@
+{
+  "_comment": "Copy to sekudo.config.json and set SEKUDO_CONFIG to its absolute path. By setting i_am_authorized true you confirm every host in authorized_targets is one you own or are permitted to test. Testing systems without authorization is illegal.",
+  "i_am_authorized": false,
+  "authorized_targets": [
+    "localhost",
+    "127.0.0.1"
+  ],
+  "max_requests_per_scan": 2000,
+  "requests_per_second": 20,
+  "allow_private_ranges": true
+}

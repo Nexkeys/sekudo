@@ -22,8 +22,16 @@ Click Add, enable the server, and the host gets four tools: `about`,
 `list_checks`, `check_scope`, `scan`. Pin the version (`sekudo-mcp@0.1.0`) so a
 future release never changes under you.
 
-> This only resolves once the package is published to npm. Until then, use the
-> "run from the repo" option below.
+### Are the env vars optional?
+
+Adding the server works without them, but **scanning does not**. `SEKUDO_AUTHORIZED`
+and `SEKUDO_TARGETS` are how you declare your fence, and every user sets them to
+their own hosts. Leave them out and the server still connects and `list_checks`
+works, but `check_scope` reports `NOT READY` and `scan` refuses every target. So
+treat those two as required. Everything else in the table below is optional and
+has a sensible default.
+
+Published on npm: https://www.npmjs.com/package/sekudo-mcp
 
 ## Or as raw MCP JSON
 
@@ -47,19 +55,24 @@ future release never changes under you.
 Sekudo only tests hosts you declare. Configure it entirely through env vars, so
 the connector form alone is enough:
 
-| Variable | Meaning | Default |
-|---|---|---|
-| `SEKUDO_AUTHORIZED` | Must be `true`. Your attestation that the targets are yours to test. | `false` |
-| `SEKUDO_TARGETS` | Comma-separated allowlist. Exact host, `*.suffix`, or IPv4 CIDR. | (empty) |
-| `SEKUDO_MAX_REQUESTS` | Per-scan request budget. | `2000` |
-| `SEKUDO_RPS` | Requests per second ceiling. | `20` |
-| `SEKUDO_ALLOW_PRIVATE` | Allow RFC1918 / loopback targets. | `true` |
-| `SEKUDO_CONFIG` | Optional path to a JSON config (same keys, snake_case). | (unset) |
-| `SEKUDO_REPORT_DIR` | Where scan reports are written. | `reports` |
+| Variable | Meaning | Required | Default |
+|---|---|---|---|
+| `SEKUDO_AUTHORIZED` | Must be `true`. Your attestation that the targets are yours to test. | Yes, to scan | `false` |
+| `SEKUDO_TARGETS` | Comma-separated allowlist. Exact host, `*.suffix`, or IPv4 CIDR. | Yes, to scan | (empty) |
+| `SEKUDO_MAX_REQUESTS` | Per-scan request budget. | No | `2000` |
+| `SEKUDO_RPS` | Requests per second ceiling. | No | `20` |
+| `SEKUDO_ALLOW_PRIVATE` | Allow RFC1918 / loopback targets. | No | `true` |
+| `SEKUDO_CONFIG` | Path to a JSON config instead of env vars (same keys, snake_case). | No | (unset) |
+| `SEKUDO_REPORT_DIR` | Where scan reports are written. | No | `reports` |
 
 Anything not in `SEKUDO_TARGETS` is refused.
 
-## Run from the repo (before npm publish)
+Prefer a file over typing env vars each time? Copy
+[`sekudo.config.example.json`](sekudo.config.example.json) to
+`sekudo.config.json`, edit it, and set `SEKUDO_CONFIG` to its absolute path. That
+one variable then replaces `SEKUDO_AUTHORIZED` and `SEKUDO_TARGETS`.
+
+## Run from a local checkout (for development)
 
 ```bash
 git clone https://github.com/Nexkeys/sekudo.git
